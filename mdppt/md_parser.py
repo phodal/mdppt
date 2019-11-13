@@ -13,4 +13,4 @@ class MDParser:
         compile_text = markdown(text)
 
         data = renderer.get_ppt_data()
-        return compile_text
+        return compile_text, data

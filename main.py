@@ -8,12 +8,22 @@ from pygments.lexers.python import PythonLexer
 
 from mdppt.md_parser import MDParser
 
+SLIDE_HEIGHT = 0
+
+SLIDE_WIDTH = 0
+
 __location__ = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 
 def run_markdown_ppt():
+    global SLIDE_HEIGHT, SLIDE_WIDTH
+
     prs = get_presentations()
+    prs.core_properties.title = "title"
+    SLIDE_HEIGHT = prs.slide_height
+    SLIDE_WIDTH = prs.slide_width
+
     add_slides(prs, "REPORT", "REPORT 1")
 
     prs.save('test.pptx')
@@ -40,8 +50,15 @@ def add_slides(prs, title_text, content_text, code_count=1):
     values = build_code_image(code)
     write_image_to_file(values, code_count)
 
-    left = top = Inches(4)
-    pic = slide.shapes.add_picture(os.path.join(__location__, 'images/code' + code_count.__str__() + '.png'), left, top)
+    insert_code_image(code_count, slide)
+
+
+def insert_code_image(code_count, slide):
+    top = Inches(1.5)
+    left = SLIDE_WIDTH / 2
+    print(top, left)
+    pic = slide.shapes.add_picture(os.path.join(__location__, 'images/code' + code_count.__str__() + '.png'), left, top,
+                                   left)
 
 
 def build_code_image(code):
@@ -49,6 +66,7 @@ def build_code_image(code):
                                                          image_format='bmp',
                                                          image_pad='32',
                                                          line_number_bg='#fff',
+                                                         line_numbers=False,
                                                          line_number_fg='#fff',
                                                          font_size='64',
                                                          font_name='Inconsolata Bold for Powerline'))
@@ -64,6 +82,6 @@ def get_presentations():
 
 if __name__ == "__main__":
     md_parser = MDParser()
-    result = md_parser.render("# h1 \n ## h2 \n ")
-    print(result)
+    result, data = md_parser.render("# h1 \n ## h2 \n ")
+    print(result, data)
     run_markdown_ppt()
