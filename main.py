@@ -1,7 +1,9 @@
 import os
 
 from pptx import Presentation
+from pptx.util import Inches
 from pygments import highlight
+from pygments.formatters.img import ImageFormatter
 from pygments.formatters.svg import SvgFormatter
 from pygments.lexers.python import PythonLexer
 
@@ -18,16 +20,39 @@ def run_markdown_ppt():
     prs.save('test.pptx')
 
 
-def add_slides(prs, title_text, content_text):
+def write_image_to_file(values, code=None):
+    image_dir = os.path.join(__location__, 'images')
+    if not os.path.exists(image_dir):
+        os.mkdir(image_dir, 0o755)
+
+    fo = open(os.path.join(__location__, 'images/code' + code.__str__() + '.png'), 'wb')
+    fo.write(values)
+    fo.close()
+
+
+def add_slides(prs, title_text, content_text, code_count=1):
     slide = prs.slides.add_slide(prs.slide_masters[0].slide_layouts[0])
     title = slide.placeholders[0]
     title.text = title_text
     sub_title = slide.placeholders[1]
     sub_title.text = content_text
 
-    code = 'print "Hello World"'
-    values = highlight(code, PythonLexer(), SvgFormatter(noclasses=True))
-    print(values)
+    code = 'print "Hello World" \nprint "Hello MdPpt"'
+    values = build_code_image(code)
+    write_image_to_file(values, code_count)
+
+    left = top = Inches(4)
+    pic = slide.shapes.add_picture(os.path.join(__location__, 'images/code' + code_count.__str__() + '.png'), left, top)
+
+
+def build_code_image(code):
+    return highlight(code, PythonLexer(), ImageFormatter(noclasses=True,
+                                                         image_format='bmp',
+                                                         image_pad='32',
+                                                         line_number_bg='#fff',
+                                                         line_number_fg='#fff',
+                                                         font_size='64',
+                                                         font_name='Inconsolata Bold for Powerline'))
 
 
 def get_presentations():
