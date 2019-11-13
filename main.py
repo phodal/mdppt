@@ -4,7 +4,6 @@ from pptx import Presentation
 from pptx.util import Inches
 from pygments import highlight
 from pygments.formatters.img import ImageFormatter
-from pygments.formatters.svg import SvgFormatter
 from pygments.lexers.python import PythonLexer
 
 from mdppt.md_parser import MDParser

@@ -10,4 +10,7 @@ class MDParser:
     def render(self, text):
         renderer = HighlightRenderer()
         markdown = mistune.Markdown(renderer=renderer)
-        return markdown(text)
+        compile_text = markdown(text)
+
+        data = renderer.get_ppt_data()
+        return compile_text
