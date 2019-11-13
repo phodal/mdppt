@@ -1,10 +1,10 @@
 import os
 
 from pptx import Presentation
-from pptx.util import Pt
-from pptx.enum.dml import MSO_THEME_COLOR_INDEX
+from pygments import highlight
+from pygments.lexers import PythonLexer
 
-from mdppt.layout import TWLayout
+from pygments.formatters import SvgFormatter
 
 __location__ = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
@@ -23,6 +23,10 @@ def add_slides(prs, title_text, content_text):
     title.text = title_text
     sub_title = slide.placeholders[1]
     sub_title.text = content_text
+
+    code = 'print "Hello World"'
+    values = highlight(code, PythonLexer(), SvgFormatter(noclasses=True))
+    print(values)
 
 
 def get_presentations():
