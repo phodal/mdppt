@@ -2,9 +2,10 @@ import os
 
 from pptx import Presentation
 from pygments import highlight
-from pygments.lexers import PythonLexer
+from pygments.formatters.svg import SvgFormatter
+from pygments.lexers.python import PythonLexer
 
-from pygments.formatters import SvgFormatter
+from mdppt.md_parser import MDParser
 
 __location__ = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
@@ -38,4 +39,7 @@ def get_presentations():
 
 
 if __name__ == "__main__":
+    md_parser = MDParser()
+    result = md_parser.render("# h1 \n ## h2 \n ")
+    print(result)
     run_markdown_ppt()
