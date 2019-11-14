@@ -12,6 +12,7 @@ class SimpleSlideVO(object):
         self.title = ''
         self.code = ''
         self.lang = ''
+        self.image_src = ''
         super().__init__()
 
 
@@ -45,7 +46,12 @@ class MarkdownRender(mistune.Renderer):
 
     def block_quote(self, text):
         self.slide_vo.quote = text
-        return super().block_quote(text)
+        return ""
+
+    def image(self, src, title, text):
+        self.slide_vo.image_src = src
+        # return super().image(src, title, text)
+        return ""
 
     def get_ppt_data(self):
         self.md_slides.append(self.slide_vo)

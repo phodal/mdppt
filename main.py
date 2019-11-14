@@ -24,9 +24,11 @@ def run_markdown_ppt(content_list):
         if content.header:
             current_slide = slider.add_normal_slide(content.header, content.paragraph)
 
-        if content.code:
-            if current_slide:
-                slider.add_code(content.code, "left")
+        if content.code and current_slide:
+            slider.add_code(content.code, "right")
+
+        if content.image_src and current_slide:
+            slider.add_image(content.image_src, "right")
 
     prs.save('test.pptx')
 

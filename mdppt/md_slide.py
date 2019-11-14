@@ -45,17 +45,23 @@ class MdSlider:
         return quote_slide
 
     def add_code(self, code, position):
-        if position == "left":
+        if position == "right":
             values = self.build_code_image(code)
             self.write_image_to_file(values, self.code_count)
             self.insert_code_image(self.code_count)
+
+    def add_image(self, src, position):
+        self.current_slide.placeholders[1].text = ""
+        if position == "right":
+            top = Inches(1.5)
+            left = self.SLIDE_WIDTH / 2
+            self.current_slide.shapes.add_picture(src, left, top, left)
 
     def insert_code_image(self, code_count):
         top = Inches(1.5)
         left = self.SLIDE_WIDTH / 2
         imagePath = os.path.join(__location__, 'images/code' + code_count.__str__() + '.png')
-        shapes = self.current_slide.shapes
-        shapes.add_picture(imagePath, left, top, left)
+        self.current_slide.shapes.add_picture(imagePath, left, top, left)
 
     def build_code_image(self, code):
         return highlight(code, PythonLexer(), ImageFormatter(noclasses=True,
