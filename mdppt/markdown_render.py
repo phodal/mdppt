@@ -18,24 +18,24 @@ class SimpleSlideVO(object):
 class MarkdownRender(mistune.Renderer):
     def __init__(self, **kwargs):
         self.md_slides = []
-        self.current_slide = SimpleSlideVO()
+        self.slide_vo = SimpleSlideVO()
         super().__init__(**kwargs)
 
     def header(self, text, level, raw=None):
-        if self.current_slide.header != "":
-            self.md_slides.append(self.current_slide)
-            self.current_slide = SimpleSlideVO()
+        if self.slide_vo.header != "":
+            self.md_slides.append(self.slide_vo)
+            self.slide_vo = SimpleSlideVO()
 
-        self.current_slide.header = text
+        self.slide_vo.header = text
         return super().header(text, level, raw)
 
     def paragraph(self, text):
-        self.current_slide.paragraph = text
+        self.slide_vo.paragraph = text
         return super().paragraph(text)
 
     def block_code(self, code, lang=None):
-        self.current_slide.code = code
-        self.current_slide.lang = lang
+        self.slide_vo.code = code
+        self.slide_vo.lang = lang
         if not lang:
             return '\n<pre><code>%s</code></pre>\n' % \
                    mistune.escape(code)
@@ -44,10 +44,10 @@ class MarkdownRender(mistune.Renderer):
         return highlight(code, lexer, formatter)
 
     def block_quote(self, text):
-        self.current_slide.quote = text
+        self.slide_vo.quote = text
         return super().block_quote(text)
 
     def get_ppt_data(self):
-        self.md_slides.append(self.current_slide)
-        self.current_slide = SimpleSlideVO()
+        self.md_slides.append(self.slide_vo)
+        self.slide_vo = SimpleSlideVO()
         return self.md_slides

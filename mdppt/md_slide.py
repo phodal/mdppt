@@ -32,7 +32,7 @@ class MdSlider:
         content_section = normal_slide.placeholders[1]
         content_section.text = content
 
-        self.current_slide = black_layout
+        self.current_slide = normal_slide
         return black_layout
 
     def add_quote_slide(self, text):
