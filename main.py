@@ -2,7 +2,6 @@ import os
 
 from pptx import Presentation
 
-from mdppt.markdown_render import SimpleSlideVO
 from mdppt.md_parser import MDParser
 from mdppt.md_slide import MdSlider
 
@@ -18,10 +17,12 @@ def run_markdown_ppt(content_list):
 
     for content in content_list:
         current_slide = None
+        if content.quote:
+            current_slide = slider.add_quote_slide(content.paragraph)
+            continue
+
         if content.header:
             current_slide = slider.add_normal_slide(content.header, content.paragraph)
-        if content.quote:
-            current_slide = slider.add_quote_slide(content.quote)
 
         if content.code:
             if current_slide:
@@ -31,7 +32,7 @@ def run_markdown_ppt(content_list):
 
 
 def get_presentations():
-    file_path = os.path.join(__location__, 'templates/tw-slides2.pptx')
+    file_path = os.path.join(__location__, 'templates/default.pptx')
     f = open(file_path, 'rb')
     prs = Presentation(f)
     f.close()

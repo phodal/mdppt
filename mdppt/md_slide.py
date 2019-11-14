@@ -55,7 +55,6 @@ class MdSlider:
         left = self.SLIDE_WIDTH / 2
         imagePath = os.path.join(__location__, 'images/code' + code_count.__str__() + '.png')
         shapes = self.current_slide.shapes
-        print(dir(shapes))
         shapes.add_picture(imagePath, left, top, left)
 
     def build_code_image(self, code):
