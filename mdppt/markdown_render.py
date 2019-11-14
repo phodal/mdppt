@@ -15,6 +15,8 @@ class SimpleSlideVO(object):
         self.dot = ''
         self.image_src = ''
         self.list = []
+        self.table_header_size = 0
+        self.table = [[]]
         super().__init__()
 
 
@@ -57,6 +59,13 @@ class MarkdownRender(mistune.Renderer):
     def image(self, src, title, text):
         self.slide_vo.image_src = src
         # return super().image(src, title, text)
+        return ""
+
+    def table_cell(self, content, **flags):
+        if flags.get("header"):
+            self.slide_vo.table_header_size = self.slide_vo.table_header_size + 1
+        else:
+            print(len(self.slide_vo.table))
         return ""
 
     def list_item(self, text):
