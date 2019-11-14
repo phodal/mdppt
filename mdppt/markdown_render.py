@@ -8,6 +8,8 @@ class SimpleSlideVO(object):
     def __init__(self):
         self.header = ''
         self.paragraph = ''
+        self.quote = ''
+        self.title = ''
         super().__init__()
 
 
@@ -36,6 +38,10 @@ class MarkdownRender(mistune.Renderer):
         lexer = get_lexer_by_name(lang, stripall=True)
         formatter = html.HtmlFormatter()
         return highlight(code, lexer, formatter)
+
+    def block_quote(self, text):
+        self.current_slide.quote = text
+        return super().block_quote(text)
 
     def get_ppt_data(self):
         self.md_slides.append(self.current_slide)

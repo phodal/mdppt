@@ -5,7 +5,7 @@ from pygments import highlight
 from pygments.formatters.img import ImageFormatter
 from pygments.lexers.python import PythonLexer
 
-from mdppt.layout import TWLayout
+from mdppt.tw_layout import TWLayout
 
 __location__ = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
