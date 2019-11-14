@@ -1,6 +1,6 @@
 import mistune
 
-from mdppt.higlight_render import HighlightRenderer
+from mdppt.markdown_render import MarkdownRender
 
 
 class MDParser:
@@ -8,7 +8,7 @@ class MDParser:
         pass
 
     def render(self, text):
-        renderer = HighlightRenderer()
+        renderer = MarkdownRender()
         markdown = mistune.Markdown(renderer=renderer)
         compile_text = markdown(text)
 

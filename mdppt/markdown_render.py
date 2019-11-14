@@ -11,7 +11,7 @@ class SimpleSlideVO(object):
         super().__init__()
 
 
-class HighlightRenderer(mistune.Renderer):
+class MarkdownRender(mistune.Renderer):
     def __init__(self, **kwargs):
         self.md_slides = []
         self.current_slide = SimpleSlideVO()
