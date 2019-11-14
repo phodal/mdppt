@@ -6,6 +6,7 @@ from pygments import highlight
 from pygments.formatters.img import ImageFormatter
 from pygments.lexers.python import PythonLexer
 
+from mdppt.layout import TWLayout
 from mdppt.md_parser import MDParser
 
 SLIDE_HEIGHT = 0
@@ -40,7 +41,9 @@ def write_image_to_file(values, code=None):
 
 
 def add_slides(prs, title_text, content_text, code_count=1):
-    slide = prs.slides.add_slide(prs.slide_masters[0].slide_layouts[0])
+    tw_layout = TWLayout(prs.slide_masters)
+    slide = prs.slides.add_slide(tw_layout.get_black_layout())
+
     title = slide.placeholders[0]
     title.text = title_text
     sub_title = slide.placeholders[1]
@@ -51,6 +54,10 @@ def add_slides(prs, title_text, content_text, code_count=1):
     write_image_to_file(values, code_count)
 
     insert_code_image(code_count, slide)
+
+    slide2 = prs.slides.add_slide(tw_layout.get_quote_layout())
+    title = slide2.placeholders[0]
+    title.text = title_text
 
 
 def insert_code_image(code_count, slide):

@@ -4,3 +4,6 @@ class TWLayout:
 
     def get_black_layout(self):
         return self.slide_masters[0].slide_layouts[0]
+
+    def get_quote_layout(self):
+        return self.slide_masters[0].slide_layouts[8]
