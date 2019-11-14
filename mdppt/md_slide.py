@@ -28,8 +28,8 @@ class MdSlider:
         title = normal_slide.placeholders[0]
         title.text = text
 
-        content = normal_slide.placeholders[1]
-        content.text = text
+        content_section = normal_slide.placeholders[1]
+        content_section.text = content
 
     def add_quote_slide(self, text):
         layout = self.tw_layout.get_quote_layout()
