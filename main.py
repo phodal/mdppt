@@ -10,17 +10,22 @@ __location__ = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 
-def run_markdown_ppt(slides_data):
+def run_markdown_ppt(content_list):
     prs = get_presentations()
     prs.core_properties.title = "title"
 
     slider = MdSlider(prs)
 
-    for content in slides_data:
+    for content in content_list:
+        current_slide = None
         if content.header:
-            slider.add_normal_slide(content.header, content.paragraph)
+            current_slide = slider.add_normal_slide(content.header, content.paragraph)
         if content.quote:
-            slider.add_quote_slide("quote")
+            current_slide = slider.add_quote_slide(content.quote)
+
+        if content.code:
+            if current_slide:
+                slider.add_code(content.code, "left")
 
     prs.save('test.pptx')
 
@@ -35,7 +40,5 @@ def get_presentations():
 
 if __name__ == "__main__":
     md_file = open(os.path.join(__location__, 'ppt.md'), 'r')
-    content = md_file.read()
-    md_parser = MDParser()
-    result, slidesData = md_parser.render(content)
+    result, slidesData = MDParser().render(md_file.read())
     run_markdown_ppt(slidesData)

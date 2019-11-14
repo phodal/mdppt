@@ -10,6 +10,8 @@ class SimpleSlideVO(object):
         self.paragraph = ''
         self.quote = ''
         self.title = ''
+        self.code = ''
+        self.lang = ''
         super().__init__()
 
 
@@ -31,7 +33,9 @@ class MarkdownRender(mistune.Renderer):
         self.current_slide.paragraph = text
         return super().paragraph(text)
 
-    def block_code(self, code, lang):
+    def block_code(self, code, lang=None):
+        self.current_slide.code = code
+        self.current_slide.lang = lang
         if not lang:
             return '\n<pre><code>%s</code></pre>\n' % \
                    mistune.escape(code)

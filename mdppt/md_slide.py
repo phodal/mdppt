@@ -18,6 +18,7 @@ class MdSlider:
 
         self.SLIDE_WIDTH = prs.slide_height
         self.SLIDE_HEIGHT = prs.slide_width
+        self.current_slide = None
 
         self.tw_layout = TWLayout(prs.slide_masters)
         super().__init__()
@@ -31,25 +32,31 @@ class MdSlider:
         content_section = normal_slide.placeholders[1]
         content_section.text = content
 
+        self.current_slide = black_layout
+        return black_layout
+
     def add_quote_slide(self, text):
         layout = self.tw_layout.get_quote_layout()
         quote_slide = self.slides.add_slide(layout)
         quote_section = quote_slide.placeholders[0]
         quote_section.text = text
 
-    def add_code(self, code, position, slide):
+        self.current_slide = quote_slide
+        return quote_slide
+
+    def add_code(self, code, position):
         if position == "left":
             values = self.build_code_image(code)
             self.write_image_to_file(values, self.code_count)
-            self.insert_code_image(self.code_count, slide)
+            self.insert_code_image(self.code_count)
 
-    def insert_code_image(self, code_count, slide):
+    def insert_code_image(self, code_count):
         top = Inches(1.5)
         left = self.SLIDE_WIDTH / 2
-        print(top, left)
-        pic = slide.shapes.add_picture(os.path.join(__location__, 'images/code' + code_count.__str__() + '.png'), left,
-                                       top,
-                                       left)
+        imagePath = os.path.join(__location__, 'images/code' + code_count.__str__() + '.png')
+        shapes = self.current_slide.shapes
+        print(dir(shapes))
+        shapes.add_picture(imagePath, left, top, left)
 
     def build_code_image(self, code):
         return highlight(code, PythonLexer(), ImageFormatter(noclasses=True,
