@@ -1,3 +1,4 @@
 python-pptx
 pygments
 mistune
+pydot

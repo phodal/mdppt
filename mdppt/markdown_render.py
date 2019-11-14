@@ -12,6 +12,7 @@ class SimpleSlideVO(object):
         self.title = ''
         self.code = ''
         self.lang = ''
+        self.dot = ''
         self.image_src = ''
         self.list = []
         super().__init__()
@@ -36,8 +37,12 @@ class MarkdownRender(mistune.Renderer):
         return super().paragraph(text)
 
     def block_code(self, code, lang=None):
-        self.slide_vo.code = code
-        self.slide_vo.lang = lang
+        if lang == 'dot':
+            self.slide_vo.dot = code
+            return code
+        else:
+            self.slide_vo.code = code
+            self.slide_vo.lang = lang
         if not lang:
             return '\n<pre><code>%s</code></pre>\n' % \
                    mistune.escape(code)

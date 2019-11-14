@@ -31,6 +31,9 @@ def run_markdown_ppt(content_list):
         if content.code and current_slide:
             slider.add_code(content.code, "right")
 
+        if content.dot and current_slide:
+            slider.add_dot(content.dot, "right")
+
         if content.image_src and current_slide:
             slider.add_image(content.image_src, "right")
 

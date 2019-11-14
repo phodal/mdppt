@@ -5,6 +5,7 @@ from pygments import highlight
 from pygments.formatters.img import ImageFormatter
 from pygments.lexers.python import PythonLexer
 
+from mdppt.md_dot import MDDot
 from mdppt.tw_layout import TWLayout
 
 __location__ = os.path.realpath(
@@ -14,6 +15,7 @@ __location__ = os.path.realpath(
 class MdSlider:
     def __init__(self, prs) -> None:
         self.code_count = 0
+        self.dot_image_count = 0
         self.slides = prs.slides
 
         self.SLIDE_WIDTH = prs.slide_height
@@ -62,7 +64,7 @@ class MdSlider:
         if position == "right":
             values = self.build_code_image(code)
             self.write_image_to_file(values, self.code_count)
-            self.insert_code_image(self.code_count)
+            self.insert_image_by_type(self.code_count)
 
     def add_image(self, src, position):
         self.current_slide.placeholders[1].text = ""
@@ -71,10 +73,15 @@ class MdSlider:
             left = self.SLIDE_WIDTH / 2
             self.current_slide.shapes.add_picture(src, left, top, left)
 
-    def insert_code_image(self, code_count):
+    def add_dot(self, dot, position):
+        md_dot = MDDot()
+        md_dot.build_graph(dot, self.dot_image_count)
+        self.insert_image_by_type(self.code_count, image_type="dot")
+
+    def insert_image_by_type(self, code_count, image_type='code'):
         top = Inches(1.5)
         left = self.SLIDE_WIDTH / 2
-        imagePath = os.path.join(__location__, 'images/code' + code_count.__str__() + '.png')
+        imagePath = os.path.join(__location__, 'images/' + image_type + code_count.__str__() + '.png')
         self.current_slide.shapes.add_picture(imagePath, left, top, left)
 
     def build_code_image(self, code):
