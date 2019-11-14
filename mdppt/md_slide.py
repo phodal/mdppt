@@ -33,7 +33,21 @@ class MdSlider:
         content_section.text = content
 
         self.current_slide = normal_slide
-        return black_layout
+        return self.current_slide
+
+    def add_list_slide(self, header, list):
+        layout = self.tw_layout.get_list_layout()
+        list_slide = self.slides.add_slide(layout)
+
+        title = list_slide.placeholders[0]
+        title.text = header
+
+        content_section = list_slide.placeholders[1]
+
+        for item in list:
+            content_section.text = content_section.text + item + "\n"
+
+        return layout
 
     def add_quote_slide(self, text):
         layout = self.tw_layout.get_quote_layout()
@@ -42,7 +56,7 @@ class MdSlider:
         quote_section.text = text
 
         self.current_slide = quote_slide
-        return quote_slide
+        return self.current_slide
 
     def add_code(self, code, position):
         if position == "right":

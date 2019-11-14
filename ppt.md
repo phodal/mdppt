@@ -31,3 +31,10 @@ f
 ## Slide 5
 
 ![Images](images/code0.png)
+
+## LIST
+
+ - item 1
+ - item 2
+ - item 3
+ - item 4

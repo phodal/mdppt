@@ -13,6 +13,7 @@ class SimpleSlideVO(object):
         self.code = ''
         self.lang = ''
         self.image_src = ''
+        self.list = []
         super().__init__()
 
 
@@ -52,6 +53,10 @@ class MarkdownRender(mistune.Renderer):
         self.slide_vo.image_src = src
         # return super().image(src, title, text)
         return ""
+
+    def list_item(self, text):
+        self.slide_vo.list.append(text)
+        return super().list_item(text)
 
     def get_ppt_data(self):
         self.md_slides.append(self.slide_vo)

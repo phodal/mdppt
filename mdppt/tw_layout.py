@@ -7,3 +7,6 @@ class TWLayout:
 
     def get_quote_layout(self):
         return self.slide_masters[0].slide_layouts[8]
+
+    def get_list_layout(self):
+        return self.slide_masters[0].slide_layouts[0]
