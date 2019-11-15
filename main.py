@@ -17,6 +17,8 @@ def run_markdown_ppt(content_list):
 
     for content in content_list:
         current_slide = None
+        print(content.table)
+
         if content.quote:
             slider.add_quote_slide(content.paragraph)
             continue
