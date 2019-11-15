@@ -16,6 +16,7 @@ class SimpleSlideVO(object):
         self.image_src = ''
         self.list = []
         self.table = []
+        self.header_level = 0
         super().__init__()
 
 
@@ -34,6 +35,7 @@ class MarkdownRender(mistune.Renderer):
             self.md_slides.append(self.slide_vo)
             self.slide_vo = SimpleSlideVO()
 
+        self.slide_vo.header_level = level
         self.slide_vo.header = text
         return super().header(text, level, raw)
 

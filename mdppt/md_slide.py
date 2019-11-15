@@ -25,14 +25,14 @@ class MdSlider:
         self.tw_layout = TWLayout(prs.slide_masters)
         super().__init__()
 
-    def add_normal_slide(self, text, content):
-        black_layout = self.tw_layout.get_black_layout()
+    def add_normal_slide(self, content):
+        black_layout = self.tw_layout.get_layout_by_level(content.header_level)
         normal_slide = self.slides.add_slide(black_layout)
         title = normal_slide.placeholders[0]
-        title.text = text
+        title.text = content.header
 
         content_section = normal_slide.placeholders[1]
-        content_section.text = content
+        content_section.text = content.paragraph
 
         self.current_slide = normal_slide
         return self.current_slide
@@ -54,6 +54,7 @@ class MdSlider:
     def add_quote_slide(self, text):
         layout = self.tw_layout.get_quote_layout()
         quote_slide = self.slides.add_slide(layout)
+
         quote_section = quote_slide.placeholders[0]
         quote_section.text = text
 

@@ -27,7 +27,7 @@ def run_markdown_ppt(content_list):
             continue
 
         if content.header:
-            current_slide = slider.add_normal_slide(content.header, content.paragraph)
+            current_slide = slider.add_normal_slide(content)
 
         if content.code and current_slide:
             slider.add_code(content.code, "right")
@@ -45,7 +45,7 @@ def run_markdown_ppt(content_list):
 
 
 def get_presentations():
-    file_path = os.path.join(__location__, 'templates/default.pptx')
+    file_path = os.path.join(__location__, 'templates/wide.pptx')
     f = open(file_path, 'rb')
     prs = Presentation(f)
     f.close()
