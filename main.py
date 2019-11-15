@@ -17,7 +17,6 @@ def run_markdown_ppt(content_list):
 
     for content in content_list:
         current_slide = None
-        print(content.table)
 
         if content.quote:
             slider.add_quote_slide(content.paragraph)
@@ -38,6 +37,9 @@ def run_markdown_ppt(content_list):
 
         if content.image_src and current_slide:
             slider.add_image(content.image_src, "right")
+
+        if len(content.table) > 0 and current_slide:
+            slider.add_table(content.table)
 
     prs.save('test.pptx')
 

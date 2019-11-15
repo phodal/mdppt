@@ -15,7 +15,7 @@ class SimpleSlideVO(object):
         self.dot = ''
         self.image_src = ''
         self.list = []
-        self.table = [[]]
+        self.table = []
         super().__init__()
 
 
@@ -26,7 +26,7 @@ class MarkdownRender(mistune.Renderer):
         self.table_header_size = 0
         self.current_table_cells_size = 0
         self.current_row = []
-        self.hash_append_header = False
+        self.had_append_header = False
         super().__init__(**kwargs)
 
     def header(self, text, level, raw=None):
@@ -69,18 +69,18 @@ class MarkdownRender(mistune.Renderer):
             self.current_row.append(content)
             self.table_header_size = self.table_header_size + 1
         else:
-            if not self.hash_append_header:
-                self.hash_append_header = True
-                self.slide_vo.table.append(self.current_row)
-                self.current_row = []
-
-            if self.current_table_cells_size == self.table_header_size:
-                self.current_table_cells_size = 0
+            if not self.had_append_header:
+                self.had_append_header = True
                 self.slide_vo.table.append(self.current_row)
                 self.current_row = []
 
             self.current_row.append(content)
             self.current_table_cells_size = self.current_table_cells_size + 1
+
+            if self.current_table_cells_size == self.table_header_size:
+                self.current_table_cells_size = 0
+                self.slide_vo.table.append(self.current_row)
+                self.current_row = []
 
         return ""
 

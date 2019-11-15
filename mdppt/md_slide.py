@@ -102,3 +102,13 @@ class MdSlider:
         fo = open(os.path.join(__location__, 'images/code' + code.__str__() + '.png'), 'wb')
         fo.write(values)
         fo.close()
+
+    def add_table(self, table):
+        table_height = len(table)
+        table_width = len(table[0])
+
+        x, y, cx, cy = Inches(2), Inches(2), Inches(4), Inches(1.5)
+        shape = self.current_slide.shapes.add_table(table_height, table_width, x, y, cx, cy)
+        for r_index, row in enumerate(table):
+            for c_index, cell in enumerate(row):
+                shape.table.cell(r_index, c_index).text = cell
