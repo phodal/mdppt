@@ -7,4 +7,9 @@ Layout Todo:
  - Three Image
  - Half Image -> Half Text
  - Quote
-  
+
+
+[渐变色生成器](http://tool.sccnn.com/ys/ColorBlender.htm)
+
+[背景透明](https://onlinepngtools.com/create-transparent-png)
+

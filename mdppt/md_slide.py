@@ -32,7 +32,8 @@ class MdSlider:
         title.text = content.header
 
         content_section = normal_slide.placeholders[1]
-        content_section.text = content.paragraph
+        for item in content.paragraph:
+            content_section.text = content_section.text + item + "\n"
 
         self.current_slide = normal_slide
         return self.current_slide
@@ -51,12 +52,13 @@ class MdSlider:
 
         return layout
 
-    def add_quote_slide(self, text):
+    def add_quote_slide(self, content):
         layout = self.tw_layout.get_quote_layout()
         quote_slide = self.slides.add_slide(layout)
 
         quote_section = quote_slide.placeholders[0]
-        quote_section.text = text
+        for item in content:
+            quote_section.text = quote_section.text + item + "\n"
 
         self.current_slide = quote_slide
         return self.current_slide

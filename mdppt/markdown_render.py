@@ -7,7 +7,7 @@ from pygments.formatters import html
 class SimpleSlideVO(object):
     def __init__(self):
         self.header = ''
-        self.paragraph = ''
+        self.paragraph = []
         self.quote = ''
         self.title = ''
         self.code = ''
@@ -40,7 +40,7 @@ class MarkdownRender(mistune.Renderer):
         return super().header(text, level, raw)
 
     def paragraph(self, text):
-        self.slide_vo.paragraph = text
+        self.slide_vo.paragraph.append(text)
         return super().paragraph(text)
 
     def block_code(self, code, lang=None):
