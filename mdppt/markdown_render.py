@@ -2,6 +2,7 @@ import mistune
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import html
+import html as sysHtml
 
 
 class SimpleSlideVO(object):
@@ -35,12 +36,12 @@ class MarkdownRender(mistune.Renderer):
             self.md_slides.append(self.slide_vo)
             self.slide_vo = SimpleSlideVO()
 
-        self.slide_vo.header_level = level
-        self.slide_vo.header = text
+        self.slide_vo.header_level = text
+        self.slide_vo.header = sysHtml.unescape(text)
         return super().header(text, level, raw)
 
     def paragraph(self, text):
-        self.slide_vo.paragraph.append(text)
+        self.slide_vo.paragraph.append(sysHtml.unescape(text))
         return super().paragraph(text)
 
     def block_code(self, code, lang=None):
@@ -87,7 +88,7 @@ class MarkdownRender(mistune.Renderer):
         return ""
 
     def list_item(self, text):
-        self.slide_vo.list.append(text)
+        self.slide_vo.list.append(sysHtml.unescape(text))
         return super().list_item(text)
 
     def get_ppt_data(self):
