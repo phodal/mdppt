@@ -2,8 +2,10 @@ import os
 
 from pptx import Presentation
 
+from config import get_config
 from mdppt.md_parser import MDParser
 from mdppt.md_slide import MdSlider
+
 
 __location__ = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
@@ -45,7 +47,7 @@ def run_markdown_ppt(content_list):
 
 
 def get_presentations():
-    file_path = os.path.join(__location__, 'templates/wide.pptx')
+    file_path = os.path.join(__location__, 'templates/' + get_config("key") + '.pptx')
     f = open(file_path, 'rb')
     prs = Presentation(f)
     f.close()
@@ -55,4 +57,5 @@ def get_presentations():
 if __name__ == "__main__":
     md_file = open(os.path.join(__location__, 'ppt.md'), 'r')
     result, slidesData = MDParser().render(md_file.read())
+
     run_markdown_ppt(slidesData)
