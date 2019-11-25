@@ -31,7 +31,7 @@ class MdSlider:
         title = normal_slide.placeholders[0]
         title.text = content.header
 
-        left = top = width = height = Inches(1)
+        left = height = Inches(1)
         try:
             content_section = normal_slide.placeholders[1]
         except:
@@ -51,7 +51,7 @@ class MdSlider:
         title = list_slide.placeholders[0]
         title.text = header
 
-        left = top = width = height = Inches(1)
+        left = height = Inches(1)
         try:
             content_section = list_slide.placeholders[1]
         except:
