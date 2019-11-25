@@ -31,7 +31,13 @@ class MdSlider:
         title = normal_slide.placeholders[0]
         title.text = content.header
 
-        content_section = normal_slide.placeholders[1]
+        left = top = width = height = Inches(1)
+        try:
+            content_section = normal_slide.placeholders[1]
+        except:
+            txBox = normal_slide.shapes.add_textbox(left, Inches(3), self.SLIDE_WIDTH, height)
+            content_section = txBox.text_frame
+
         for item in content.paragraph:
             content_section.text = content_section.text + item + "\n"
 
@@ -45,7 +51,12 @@ class MdSlider:
         title = list_slide.placeholders[0]
         title.text = header
 
-        content_section = list_slide.placeholders[1]
+        left = top = width = height = Inches(1)
+        try:
+            content_section = list_slide.placeholders[1]
+        except:
+            txBox = list_slide.shapes.add_textbox(left, Inches(3), self.SLIDE_WIDTH, height)
+            content_section = txBox.text_frame
 
         for item in list:
             content_section.text = content_section.text + item + "\n"
