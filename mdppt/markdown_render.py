@@ -29,6 +29,7 @@ class MarkdownRender(mistune.Renderer):
         self.current_table_cells_size = 0
         self.current_row = []
         self.had_append_header = False
+        self.has_enter_table_body = False
         super().__init__(**kwargs)
 
     def header(self, text, level, raw=None):
@@ -69,9 +70,18 @@ class MarkdownRender(mistune.Renderer):
 
     def table_cell(self, content, **flags):
         if flags.get("header"):
+            if self.has_enter_table_body:
+                self.current_row = []
+                self.slide_vo.table = []
+                self.table_header_size = 0
+                self.current_table_cells_size = 0
+
             self.current_row.append(content)
             self.table_header_size = self.table_header_size + 1
+            self.has_enter_table_body = False
+            self.had_append_header = False
         else:
+            self.has_enter_table_body = True
             if not self.had_append_header:
                 self.had_append_header = True
                 self.slide_vo.table.append(self.current_row)
